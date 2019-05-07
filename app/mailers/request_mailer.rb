@@ -7,7 +7,6 @@ class RequestMailer < ApplicationMailer
   #
   def email_confirmation(request)
     @request = request
-    @greeting = "Hi"
 
     mail(to: @request.email, subject: 'Welcome to our Coworking place')
   end

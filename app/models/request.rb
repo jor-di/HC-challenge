@@ -7,4 +7,11 @@ class Request < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: { with: EMAIL_PATTERN }
   validates :biography, presence: true, length: { minimum: 20 }
   validates :phone_number, presence: true, format: { with: PHONE_NUMBER_PATTERN }
+  after_create :send_confirmation_email
+
+  private
+
+  def send_confirmation_email
+    RequestMailer.email_confirmation(self).deliver_now
+  end
 end
