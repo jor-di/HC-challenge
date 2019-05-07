@@ -1,2 +1,9 @@
-<h1>Requests#new</h1>
-<p>Find me in app/views/requests/new.html.erb</p>
+<h1>Coworking place</h1>
+<p>Subscribe for joining us !</p>
+<%= simple_form_for @request do |f| %>
+  <%= f.input :name %>
+  <%= f.input :email, placeholder: 'your@email.com' %>
+  <%= f.input :phone_number %>
+  <%= f.input :biography, as: :text, placeholder: 'tell us about you !' %>
+  <%= f.button :submit %>
+<% end %>
