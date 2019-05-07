@@ -4,7 +4,7 @@ PHONE_NUMBER_PATTERN = /\A((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?
 
 class Request < ApplicationRecord
   validates :name, presence: true
-  validates :email, presence: true, format: { with: EMAIL_PATTERN }
+  validates :email, presence: true, uniqueness: true, format: { with: EMAIL_PATTERN }
   validates :biography, presence: true, length: { minimum: 20 }
   validates :phone_number, presence: true, format: { with: PHONE_NUMBER_PATTERN }
 end
