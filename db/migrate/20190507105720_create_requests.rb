@@ -5,7 +5,7 @@ class CreateRequests < ActiveRecord::Migration[5.2]
       t.string :email
       t.string :phone_number
       t.string :biography
-      t.date :email_confirmed_date
+      t.datetime :email_confirmed_date
       t.date :request_expiring_date
       t.date :contract_starting_date
 

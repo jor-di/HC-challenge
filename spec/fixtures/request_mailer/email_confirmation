@@ -1,0 +1,3 @@
+RequestMailer#email_confirmation
+
+Hi, find me in app/views/request_mailer/email_confirmation

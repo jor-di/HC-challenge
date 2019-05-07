@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
   root to: 'requests#new'
-  resource :requests, only: [:new, :create]
+  resources :requests, only: [:new, :create] do
+    get 'confirm_email', on: :member
+  end
 end

@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_05_07_105720) do
     t.string "email"
     t.string "phone_number"
     t.string "biography"
-    t.date "email_confirmed_date"
+    t.datetime "email_confirmed_date"
     t.date "request_expiring_date"
     t.date "contract_starting_date"
     t.datetime "created_at", null: false

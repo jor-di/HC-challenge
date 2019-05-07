@@ -1,0 +1,13 @@
+<h1>Welcome at our place !</h1>
+
+<p>Hello <%= @request.name %>,</p>
+
+<p>Welcome to our Coworking place.</p>
+
+<p>Please confirm your email to be added to the waiting list.</p>
+
+<%= link_to "Confirm your email !", confirm_email_request_url(@request.id) %>
+
+<p>See you !</p>
+
+<p>The Coworking team</p>
