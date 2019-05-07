@@ -22,7 +22,6 @@ RSpec.describe Request, type: :model do
       expect(a_request).to_not be_valid
     end
     it 'should not be valid with a biography missing' do
-      p a_request
       a_request.biography = nil
       expect(a_request).to_not be_valid
     end
