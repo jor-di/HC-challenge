@@ -5,6 +5,10 @@ EMAIL_PATTERN = /\A[^@]+@[^@.]+[.][a-zA-Z]+\z/
 PHONE_NUMBER_PATTERN = /\A((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))\z/
 
 class Request < ApplicationRecord
+  scope :unconfirmed, -> { where(email_confirmed_date: nil) }
+  scope :confirmed, -> { where.not(email_confirmed_date: nil).where(contract_starting_date: nil, expired: false).order(:email_confirmed_date) }
+  scope :accepted, -> { where.not(contract_starting_date: nil) }
+  scope :expired, -> { where(expired: true) }
   validates :name, presence: true
   validates :email, presence: true, format: { with: EMAIL_PATTERN }
   validates :biography, presence: true, length: { minimum: 20 }
@@ -22,17 +26,17 @@ class Request < ApplicationRecord
 
   def expired!
     self.expired = true
-    save
+    save!
   end
 
   def confirm_email!
     self.email_confirmed_date = Time.now
-    save
+    save!
   end
 
   def update_expiring_date!
     self.request_expiring_date = Date.today + 3.months
-    save
+    save!
   end
 
   private
