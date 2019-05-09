@@ -56,7 +56,7 @@ class Request < ApplicationRecord
     Request.confirmed.all.each do |request|
       if request.request_expiring_date == today # double equal and not superior to to avoid multiple sendings over the passing days
         request.send_renew_expiring_date_email
-      elsif request.request_expiring_date > today + REQUEST_EXPIRING_DELAY_EXTRA_DURATION
+      elsif request.request_expiring_date + REQUEST_EXPIRING_DELAY_EXTRA_DURATION < today
         request.expired!
       end
     end
