@@ -10,20 +10,28 @@ class Request < ApplicationRecord
   validates :biography, presence: true, length: { minimum: 20 }
   validates :phone_number, presence: true, format: { with: PHONE_NUMBER_PATTERN }
   validates_uniqueness_of :email, conditions: -> { where(expired: false) } # this to ensure a user can re-subscribe with the same email if his first request has expired
+  validates_inclusion_of :expired, in: [false], if: :contract_starting_date, message: "cannot be false for the request to be accepted"
+  validates_exclusion_of :email_confirmed_date, in: [nil], if: :contract_starting_date, message: "cannot be nil for the request to be accepted"
   after_create :send_confirmation_email
+
+  def accept!
+    self.contract_starting_date = Date.today
+    self.request_expiring_date = nil
+    save!
+  end
 
   def expired!
     self.expired = true
     save
   end
 
-  def confirm_email!(time)
-    self.email_confirmed_date = time
+  def confirm_email!
+    self.email_confirmed_date = Time.now
     save
   end
 
-  def update_expiring_date!(date)
-    self.request_expiring_date = date + 3.months
+  def update_expiring_date!
+    self.request_expiring_date = Date.today + 3.months
     save
   end
 

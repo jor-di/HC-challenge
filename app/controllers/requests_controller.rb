@@ -15,9 +15,8 @@ class RequestsController < ApplicationController
   def confirm_email
     request = Request.find(params[:id])
     if request.email_confirmed_date.nil?
-      current_time = Time.now
-      request.confirm_email!(current_time)
-      request.update_expiring_date!(current_time)
+      request.confirm_email!
+      request.update_expiring_date!
     end
     redirect_to root_path
   end
@@ -27,7 +26,7 @@ class RequestsController < ApplicationController
     today = Date.today
     expiring_date = request.request_expiring_date
     if expiring_date < today
-      expiring_date > 7.days.ago ? request.update_expiring_date!(today) : request.expired!
+      expiring_date > 7.days.ago ? request.update_expiring_date! : request.expired!
     end
     redirect_to root_path
   end

@@ -4,10 +4,10 @@ VALID_EMAIL = 'john@doe.com'
 
 RSpec.describe Request, type: :model do
   context 'When creating a request instance' do
-    subject(:a_request) {
+    subject(:a_request) do
       described_class.new(name: 'John Doe', email: VALID_EMAIL, phone_number: '0399190139',
-                  biography: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.')
-      }
+                          biography: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.')
+    end
 
     it 'should be valid with valid arguments' do
       expect(a_request).to be_valid
@@ -55,12 +55,20 @@ RSpec.describe Request, type: :model do
       expect(a_request.contract_starting_date).to be_nil
     end
 
-    it 'should not allow duplicate emails' do
+    it 'should not allow duplicate emails of 2 unexpired requests' do
       a_request.save
       another_request = Request.new(name: 'another name', email: VALID_EMAIL, phone_number: '0610101010',
                   biography: 'another valid biography')
       another_request.valid?
       expect(another_request.errors[:email]).to include("has already been taken")
+    end
+
+    it 'should allow duplicate emails if one of the two requests is expired' do
+      a_request.expired!
+      another_request = Request.new(name: 'another name', email: VALID_EMAIL, phone_number: '0610101010',
+                  biography: 'another valid biography')
+      another_request.valid?
+      expect(another_request).to be_valid
     end
   end
 end
