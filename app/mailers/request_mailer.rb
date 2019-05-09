@@ -10,4 +10,10 @@ class RequestMailer < ApplicationMailer
 
     mail(to: @request.email, subject: 'Welcome to our Coworking place')
   end
+
+  def renew_expiring_date(request)
+    @request = request
+
+    mail(to: @request.email, subject: 'Coworking: are you still interested ?')
+  end
 end

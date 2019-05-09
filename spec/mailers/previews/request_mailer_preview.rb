@@ -7,4 +7,9 @@ class RequestMailerPreview < ActionMailer::Preview
     RequestMailer.email_confirmation(request)
   end
 
+  def renew_expiring_date
+    request = Request.first
+    RequestMailer.renew_expiring_date(request)
+  end
+
 end

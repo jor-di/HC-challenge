@@ -13,11 +13,21 @@ class RequestsController < ApplicationController
   end
 
   def confirm_email
-    @request = Request.find(params[:id])
-    if @request.email_confirmed_date.nil?
-      current_date = Time.now
-      set_email_confirmed_date(@request, current_date)
-      set_request_expiring_date(@request, current_date + 3.months)
+    request = Request.find(params[:id])
+    if request.email_confirmed_date.nil?
+      current_time = Time.now
+      request.confirm_email!(current_time)
+      request.update_expiring_date!(current_time)
+    end
+    redirect_to root_path
+  end
+
+  def renew_expiring_date
+    request = Request.find(params[:id])
+    today = Date.today
+    expiring_date = request.request_expiring_date
+    if expiring_date < today
+      expiring_date > 7.days.ago ? request.update_expiring_date!(today) : request.expired!
     end
     redirect_to root_path
   end
@@ -26,15 +36,5 @@ class RequestsController < ApplicationController
 
   def request_params
     params.require('request').permit(:name, :phone_number, :email, :biography)
-  end
-
-  def set_email_confirmed_date(request, date)
-    request.email_confirmed_date = date
-    request.save
-  end
-
-  def set_request_expiring_date(request, date)
-    request.request_expiring_date = date
-    request.save
   end
 end

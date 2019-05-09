@@ -1,0 +1,13 @@
+<p>Hello <%= @request.name %>,</p>
+
+<p>It has been a while !</p>
+
+<p>The coworking is still busy, you are on the waiting list for joining us. Your position is ##.</p>
+
+<%= link_to "Please, confirm that your are still interested in joining us !", renew_expiring_date_request_url(@request.id) %>
+
+<p>This link will expire in 7 days.</p>
+
+<p>We hope to see you soon !</p>
+
+<p>The Coworking team</p>
