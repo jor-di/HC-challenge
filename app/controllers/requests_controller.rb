@@ -25,8 +25,8 @@ class RequestsController < ApplicationController
     request = Request.find(params[:id])
     today = Date.today
     expiring_date = request.request_expiring_date
-    if expiring_date < today
-      expiring_date > 7.days.ago ? request.update_expiring_date! : request.expired!
+    if expiring_date < today && request.expired == false # check if expiring date is passed (avoid double validation + kind of restriction over hacking) and not expired. Should implement a token system for better authentication.
+      request.update_expiring_date!
     end
     redirect_to root_path
   end
