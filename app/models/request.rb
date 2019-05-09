@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-EMAIL_PATTERN = /\A[^@]+@[^@.]+[.][a-zA-Z]+\z/
+EMAIL_PATTERN = /\A[^@]+@[^@.]+[.][a-zA-Z]+\z/.freeze
 # ITS phone numbers. https://www.regextester.com/1978
-PHONE_NUMBER_PATTERN = /\A((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))\z/
+PHONE_NUMBER_PATTERN = /\A((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))\z/.freeze
 
 class Request < ApplicationRecord
   scope :unconfirmed, -> { where(email_confirmed_date: nil) }
@@ -37,6 +37,10 @@ class Request < ApplicationRecord
   def update_expiring_date!
     self.request_expiring_date = Date.today + 3.months
     save!
+  end
+
+  def waiting_list_position
+    Request.confirmed.pluck(:id).index(id) + 1
   end
 
   private
