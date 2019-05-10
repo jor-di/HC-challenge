@@ -47,6 +47,10 @@ class Request < ApplicationRecord
     Request.confirmed.pluck(:id).index(id) + 1
   end
 
+  def waiting_list_position_to_text
+    "You are on the #{waiting_list_position.ordinalize} position on the waiting list."
+  end
+
   def contract_ending_date
     contract_starting_date + CONTRACT_DURATION
   end
