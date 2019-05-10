@@ -55,7 +55,7 @@ class Request < ApplicationRecord
     contract_starting_date + CONTRACT_DURATION
   end
 
-  def self.reconfirm_requests
+  def self.update_requests
     today = Date.today
     Request.confirmed.all.each do |request|
       if request.request_expiring_date == today # double equal and not superior to to avoid multiple sendings over the passing days
@@ -66,7 +66,7 @@ class Request < ApplicationRecord
     end
   end
 
-  def self.renew_contracts
+  def self.update_contracts
     today = Date.today
     Request.accepted.all.each do |request|
       if request.contract_ending_date <= today
