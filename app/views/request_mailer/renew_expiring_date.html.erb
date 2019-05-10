@@ -2,7 +2,7 @@
 
 <p>It has been a while !</p>
 
-<p>The coworking is still busy but don't worry, you remain on the waiting list for joining us. Your position is <%= @request.waiting_list_position %> / <%= Request.confirmed.count %>.</p>
+<p>Our coworking place is still busy but don't worry, you remain on the waiting list for joining us. Your are on the <%= @request.waiting_list_position.ordinalize %> position.</p>
 
 <%= link_to "Please, confirm that your are still interested in joining us !", renew_expiring_date_request_url(@request.id) %>
 
