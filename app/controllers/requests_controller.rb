@@ -6,8 +6,10 @@ class RequestsController < ApplicationController
   def create
     @request = Request.new(request_params)
     if @request.save
+      flash[:success] = 'Welcome on board ! Please, check your emails to complete your subscription.'
       redirect_to root_path
     else
+      flash.now[:success] = 'Sorry, something went wrong with your data. Please check your info and try again!'
       render 'new'
     end
   end
@@ -17,6 +19,9 @@ class RequestsController < ApplicationController
     if request.email_confirmed_date.nil?
       request.confirm_email!
       request.update_expiring_date!
+      flash[:success] = "Thank you, your subscription is confirmed.
+                         You are on the #{request.waiting_list_position.ordinalize} position on the waiting list.
+                         We will come back to you soon!"
     end
     redirect_to root_path
   end

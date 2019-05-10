@@ -39,6 +39,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'autoprefixer-rails', '~> 9.5', '>= 9.5.1.1'
 gem 'simple_form', '~> 4.1'
 gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'
+gem 'jquery-rails'
 
 gem 'letter_opener', '~> 1.7'
 
