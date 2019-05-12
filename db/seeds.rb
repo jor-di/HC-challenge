@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
+Request.destroy_all
+
 users = {}
 7.times do |index|
   pos = index + 1
   users[pos] = Request.create!(name: "User #{pos}",
-                                      email: "user_#{pos}@Lorem.com",
-                                      biography: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-                                      phone_number: '0707070707')
+                               email: "user_#{pos}@Lorem.com",
+                               biography: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+                               phone_number: '0707070707')
 end
 
 # 1st user : unconfirmed
